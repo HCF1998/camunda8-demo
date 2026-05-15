@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  xmlns:zeebe="http://camunda.org/schema/zeebe/1.0"
+                  id="Definitions_1"
+                  targetNamespace="http://bpmn.io/schema/bpmn">
+
+    <bpmn:process id="order-process" name="Order Processing" isExecutable="true">
+
+        <bpmn:startEvent id="start" name="Order Received">
+            <bpmn:outgoing>flow-1</bpmn:outgoing>
+        </bpmn:startEvent>
+
+        <bpmn:serviceTask id="validate-order" name="Validate Order">
+            <bpmn:extensionElements>
+                <zeebe:taskDefinition type="validate-order"/>
+            </bpmn:extensionElements>
+            <bpmn:incoming>flow-1</bpmn:incoming>
+            <bpmn:outgoing>flow-2</bpmn:outgoing>
+        </bpmn:serviceTask>
+
+        <bpmn:serviceTask id="process-payment" name="Process Payment">
+            <bpmn:extensionElements>
+                <zeebe:taskDefinition type="process-payment"/>
+            </bpmn:extensionElements>
+            <bpmn:incoming>flow-2</bpmn:incoming>
+            <bpmn:outgoing>flow-3</bpmn:outgoing>
+        </bpmn:serviceTask>
+
+        <bpmn:serviceTask id="ship-order" name="Ship Order">
+            <bpmn:extensionElements>
+                <zeebe:taskDefinition type="ship-order"/>
+            </bpmn:extensionElements>
+            <bpmn:incoming>flow-3</bpmn:incoming>
+            <bpmn:outgoing>flow-4</bpmn:outgoing>
+        </bpmn:serviceTask>
+
+        <bpmn:endEvent id="end" name="Order Completed">
+            <bpmn:incoming>flow-4</bpmn:incoming>
+        </bpmn:endEvent>
+
+        <bpmn:sequenceFlow id="flow-1" sourceRef="start" targetRef="validate-order"/>
+        <bpmn:sequenceFlow id="flow-2" sourceRef="validate-order" targetRef="process-payment"/>
+        <bpmn:sequenceFlow id="flow-3" sourceRef="process-payment" targetRef="ship-order"/>
+        <bpmn:sequenceFlow id="flow-4" sourceRef="ship-order" targetRef="end"/>
+
+    </bpmn:process>
+
+    <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+        <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="order-process">
+            <bpmndi:BPMNShape id="start-shape" bpmnElement="start">
+                <dc:Bounds x="152" y="102" width="36" height="36"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds x="137" y="145" width="66" height="14"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="validate-order-shape" bpmnElement="validate-order">
+                <dc:Bounds x="240" y="80" width="100" height="80"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="process-payment-shape" bpmnElement="process-payment">
+                <dc:Bounds x="400" y="80" width="100" height="80"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="ship-order-shape" bpmnElement="ship-order">
+                <dc:Bounds x="560" y="80" width="100" height="80"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="end-shape" bpmnElement="end">
+                <dc:Bounds x="722" y="102" width="36" height="36"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds x="704" y="145" width="73" height="14"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge id="flow-1-di" bpmnElement="flow-1">
+                <di:waypoint x="188" y="120"/>
+                <di:waypoint x="240" y="120"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="flow-2-di" bpmnElement="flow-2">
+                <di:waypoint x="340" y="120"/>
+                <di:waypoint x="400" y="120"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="flow-3-di" bpmnElement="flow-3">
+                <di:waypoint x="500" y="120"/>
+                <di:waypoint x="560" y="120"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="flow-4-di" bpmnElement="flow-4">
+                <di:waypoint x="660" y="120"/>
+                <di:waypoint x="722" y="120"/>
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+
+</bpmn:definitions>

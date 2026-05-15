@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: camunda8-demo
+
+server:
+  port: 8080
+
+zeebe:
+  client:
+    broker:
+      gateway-address: localhost:26500
+    security:
+      plaintext: true
