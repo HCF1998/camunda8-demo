@@ -71,6 +71,8 @@ docker compose up -d
 - **Operate**：流程监控 UI (`http://localhost:8081`)
 - **Elasticsearch**：数据存储 (`http://localhost:9200`)
 
+> **数据持久化**：容器数据已挂载到本地 `data/` 目录，重启后数据不会丢失。该目录已被 `.gitignore` 忽略，仅保留在本地。
+
 ### 2. 启动应用
 
 ```bash

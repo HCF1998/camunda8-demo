@@ -3,7 +3,7 @@ spring:
     name: camunda8-demo
 
 server:
-  port: 8080
+  port: 8082
 
 zeebe:
   client:
